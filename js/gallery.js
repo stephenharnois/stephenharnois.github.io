@@ -4,13 +4,13 @@ function activateGallery() {
     let currentClass = "current";
 
     thumbnails.forEach(thumbnail => {
-        thumbnail.addEventListener("click", () => {
-            let newImageSrc = thumbnail.dataset.largeVersion;
-            let newImageTitle = thumbnail.dataset.title;
-            let newImageDescription = thumbnail.dataset.description;
-            let newImagesAlt = thumbnail.alt;
+        // Preload large images
+        let newImageSrc = thumbnail.dataset.largeVersion;
+        let largeVersion = new Image();
+        largeVersion.src = newImageSrc;
 
-            mainImage.setAttribute("alt", newImagesAlt);
+        thumbnail.addEventListener("click", () => {
+            mainImage.setAttribute("alt", thumbnail.alt);
             mainImage.setAttribute("src", newImageSrc);
 
             document.querySelector(".current").classList.remove(currentClass);
@@ -20,8 +20,8 @@ function activateGallery() {
             let title = galleryInfo.querySelector(".title");
             let description = galleryInfo.querySelector(".description");
 
-            title.innerHTML = newImageTitle;
-            description.innerHTML = newImageDescription;
+            title.innerHTML = thumbnail.dataset.title;
+            description.innerHTML = thumbnail.dataset.description;
         })
     })
 }
